@@ -39,7 +39,7 @@ canvas {
 }
 
 input[type="file"] {
-    display: none;
+  display: none;
 }
 
 .navbar {
@@ -77,10 +77,12 @@ input[type="file"] {
   transition: var(--transition-speed);
 }
 
-.nav-link:hover {
-  filter: grayscale(0%) opacity(1);
-  background: var(--bg-secondary);
-  color: var(--text-secondary);
+.nav-link:not(.disabled) {
+  cursor: pointer;
+}
+
+.nav-link.disabled {
+  cursor: default;
 }
 
 .link-text {
@@ -151,8 +153,11 @@ input[type="file"] {
     flex-direction: row;
   }
 
-  .nav-link {
+  .nav-link:not(.disabled) {
     justify-content: center;
+    filter: grayscale(0%) opacity(1);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
   }
 
   main {
@@ -171,6 +176,12 @@ input[type="file"] {
 
   .navbar:hover {
     width: 16rem;
+  }
+
+  .nav-link:hover:not(.disabled) {
+    filter: grayscale(0%) opacity(1);
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
   }
 
   .navbar:hover .link-text {
