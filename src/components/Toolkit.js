@@ -1,10 +1,11 @@
 import { useCallback, useState } from "preact/hooks";
 import Navbar from "./Navbar";
+import { performAction } from "../help";
 
 const Toolkit = ({ canvas, context }) => {
   const [imageLoaded, setLoaded] = useState(false);
 
-  const invert = useCallback(() => {
+  const invert = useCallback(async () => {
     if (imageLoaded) {
       const imageData = context.current.getImageData(
         0,
@@ -12,18 +13,16 @@ const Toolkit = ({ canvas, context }) => {
         canvas.current.width,
         canvas.current.height
       );
-      const data = imageData.data;
-      for (let i = 0; i < data.length; i += 4) {
-        data[i] = 255 - data[i]; // red
-        data[i + 1] = 255 - data[i + 1]; // green
-        data[i + 2] = 255 - data[i + 2]; // blue
-      }
-
-      context.current.putImageData(imageData, 0, 0);
+      const data = await performAction("invert", imageData.data);
+      context.current.putImageData(
+        new ImageData(data, canvas.current.width),
+        0,
+        0
+      );
     }
   }, [canvas, context, imageLoaded]);
 
-  const grayscale = useCallback(() => {
+  const grayscale = useCallback(async () => {
     if (imageLoaded) {
       const imageData = context.current.getImageData(
         0,
@@ -31,14 +30,12 @@ const Toolkit = ({ canvas, context }) => {
         canvas.current.width,
         canvas.current.height
       );
-      const data = imageData.data;
-      for (let i = 0; i < data.length; i += 4) {
-        let avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
-        data[i] = avg; // red
-        data[i + 1] = avg; // green
-        data[i + 2] = avg; // blue
-      }
-      context.current.putImageData(imageData, 0, 0);
+      const data = await performAction("greyscale", imageData.data);
+      context.current.putImageData(
+        new ImageData(data, canvas.current.width),
+        0,
+        0
+      );
     }
   }, [canvas, context, imageLoaded]);
 
