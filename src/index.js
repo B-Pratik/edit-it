@@ -14,9 +14,9 @@ const App = () => {
   return (
     <>
       <Toolkit canvas={canvas} context={ctx} />
-      <main>
+      <div class="container">
         <canvas ref={canvas} />
-      </main>
+      </div>
     </>
   );
 };

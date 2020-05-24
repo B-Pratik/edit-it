@@ -5,39 +5,26 @@ import { performAction } from "../help";
 const Toolkit = ({ canvas, context }) => {
   const [imageLoaded, setLoaded] = useState(false);
 
-  const invert = useCallback(async () => {
-    if (imageLoaded) {
-      const imageData = context.current.getImageData(
-        0,
-        0,
-        canvas.current.width,
-        canvas.current.height
-      );
-      const data = await performAction("invert", imageData.data);
-      context.current.putImageData(
-        new ImageData(data, canvas.current.width),
-        0,
-        0
-      );
-    }
-  }, [canvas, context, imageLoaded]);
+  const callAction = useCallback(
+    async (action) => {
+      if (imageLoaded) {
+        const imageData = context.current.getImageData(
+          0,
+          0,
+          canvas.current.width,
+          canvas.current.height
+        );
+        const updated = await performAction(action, imageData.data);
+        imageData.data.set(updated);
+        context.current.putImageData(imageData, 0, 0);
+      }
+    },
+    [canvas, context, imageLoaded]
+  );
 
-  const grayscale = useCallback(async () => {
-    if (imageLoaded) {
-      const imageData = context.current.getImageData(
-        0,
-        0,
-        canvas.current.width,
-        canvas.current.height
-      );
-      const data = await performAction("greyscale", imageData.data);
-      context.current.putImageData(
-        new ImageData(data, canvas.current.width),
-        0,
-        0
-      );
-    }
-  }, [canvas, context, imageLoaded]);
+  const invert = useCallback(() => callAction("invert"), [callAction]);
+
+  const grayscale = useCallback(() => callAction("greyscale"), [callAction]);
 
   const onUpload = useCallback(
     ({ target: { files: [file] = [] } = {} }) => {
@@ -65,10 +52,24 @@ const Toolkit = ({ canvas, context }) => {
         .toDataURL("image/png")
         .replace("image/png", "image/octet-stream");
 
-      const link = document.createElement("a");
-      link.setAttribute("download", "file.png");
-      link.setAttribute("href", image);
-      link.click();
+      if (window.navigator.msSaveOrOpenBlob) {
+        const dataURItoBlob = (dataURI) => {
+          let binary = atob(dataURI.split(",")[1]);
+          let array = [];
+          for (let i = 0; i < binary.length; i++) {
+            array.push(binary.charCodeAt(i));
+          }
+          return new Blob([new Uint8Array(array)], { type: "image/png" });
+        };
+
+        let blob = dataURItoBlob(image);
+        window.navigator.msSaveOrOpenBlob(blob, "my-image.png");
+      } else {
+        const link = document.createElement("a");
+        link.setAttribute("download", "file.png");
+        link.setAttribute("href", image);
+        link.click();
+      }
     }
   }, [canvas, imageLoaded]);
 
