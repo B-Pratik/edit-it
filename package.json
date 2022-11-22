@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "preact": "^10.1.0",
-    "preact-cli": "^3.0.0-rc.6",
+    "preact-cli": "^3.4.1",
     "preact-render-to-string": "^5.1.2",
     "sirv-cli": "^0.4.5"
   }
