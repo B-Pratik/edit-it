@@ -1,0 +1,1 @@
+(function(){"use strict";var s=Object.freeze({__proto__:null,greyscale:e=>{for(let r=0;r<e.length;r+=4){let n=(e[r]+e[r+1]+e[r+2])/3;e[r]=n,e[r+1]=n,e[r+2]=n}return e},invert:e=>{for(let r=0;r<e.length;r+=4)e[r]=255-e[r],e[r+1]=255-e[r+1],e[r+2]=255-e[r+2];return e}});onmessage=({data:{action:e,data:r}})=>postMessage({data:s[e](r)})})();
