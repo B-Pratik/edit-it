@@ -1,9 +1,7 @@
-import "./style.css";
+import { useEffect, useRef } from 'preact/hooks'
+import Toolkit from "./components/Toolkit"
 
-import { useRef, useEffect } from "preact/hooks";
-import Toolkit from "./components/Toolkit";
-
-const App = () => {
+export function App() {
   const canvas = useRef(null);
   const ctx = useRef(null);
 
@@ -19,6 +17,4 @@ const App = () => {
       </div>
     </>
   );
-};
-
-export default App;
+}
