@@ -1,0 +1,17 @@
+{
+  "bundle.css": "bundle.d4781.css",
+  "bundle.js": "bundle.f2368.esm.js",
+  "bundle.js.map": "bundle.f2368.esm.js.map",
+  "polyfills.js": "polyfills.306aa.esm.js",
+  "polyfills.js.map": "polyfills.306aa.esm.js.map",
+  "actions.worker.js": "actions.worker.eae34def6f4ea088ef33.js",
+  "actions.worker.js.map": "actions.worker.eae34def6f4ea088ef33.js.map",
+  "assets/favicon.ico": "assets/favicon.ico",
+  "assets/icon.png": "assets/icon.png",
+  "bundle.d4781.css.map": "bundle.d4781.css.map",
+  "manifest.json": "manifest.json",
+  "sw-esm.js": "sw-esm.js",
+  "sw-esm.js.map": "sw-esm.js.map",
+  "sw.js": "sw.js",
+  "sw.js.map": "sw.js.map"
+}
